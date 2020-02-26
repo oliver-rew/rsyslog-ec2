@@ -7,14 +7,14 @@ CERT=$(CERTDIR)/cert.pem
 
 # cert template
 CERTCFG=$(CERTDIR)/cert.cfg
-CERTCFGTMPL=$(CERTDIR)/$(CERTCFG).tmpl
+CERTCFGTMPL=$(CERTCFG).tmpl
 
 # find/replace key in ca config
 HOSTNAMEKEY=HOSTNAME
 
 # ca template
 CACFG=$(CERTDIR)/ca.cfg
-CACFGTMPL=$(CERTDIR)/$(CACFG).tmpl
+CACFGTMPL=$(CACFG).tmpl
 
 # find/replace key in cert config
 COMMONNAMEKEY=COMMON_NAME
