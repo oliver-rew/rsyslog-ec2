@@ -26,6 +26,9 @@ URL=$(shell host $(shell dig @resolver1.opendns.com ANY myip.opendns.com +short)
 
 all: init ca pk req cert
 
+#install:
+
+
 # insert hostname and server url into CA and cert config templates.
 # It is CRITICAL that the URL match the URL of the server!!!
 init:

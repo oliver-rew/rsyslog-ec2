@@ -1,0 +1,4 @@
+# add rsyslog path for gw serial based on hostname
+$template DynaFile, "/var/log/gw-%HOSTNAME%/%HOSTNAME%.log"
+$CreateDirs on
+*.* ?DynaFile
