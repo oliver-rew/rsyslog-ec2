@@ -37,10 +37,8 @@ all: init ca pk req cert
 
 #install:
 
+# insert keyfile paths into rsyslog tls config file
 rsyslog_cert_path:
-	#cat rsyslog/tlsserver.conf | sed 's/$(CA_KEY)/$(shell realpath $(CA) | sed 's/\//\\\//g')/g'
-	#cat rsyslog/tlsserver.conf | sed 's/$(CERT_KEY)/$(shell realpath $(CERT) | sed 's/\//\\\//g')/g'
-	#cat rsyslog/tlsserver.conf | sed 's/$(PK_KEY)/$(shell realpath $(PK) | sed 's/\//\\\//g')/g'
 	sed -i 's/$(CA_KEY)/$(shell realpath $(CA) | sed 's/\//\\\//g')/g' $(RSYSLOG_TLS_CONF)
 	sed -i 's/$(CERT_KEY)/$(shell realpath $(CERT) | sed 's/\//\\\//g')/g' $(RSYSLOG_TLS_CONF)
 	sed -i 's/$(PK_KEY)/$(shell realpath $(PK) | sed 's/\//\\\//g')/g' $(RSYSLOG_TLS_CONF)
@@ -72,3 +70,4 @@ ca:
 clean:
 	rm -rf $(PK) $(CAPK) $(REQ) $(CA) $(CERT) $(CERTCFG) $(CACFG)
 
+.PHONY: rsyslog_cert_path all init pk req cert ca clean
