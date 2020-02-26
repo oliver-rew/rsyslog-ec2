@@ -1,19 +1,20 @@
-PK=key.pem
-CAPK=ca-key.pem
-REQ=request.pem
-CA=ca.pem
-CERT=cert.pem
+CERTDIR=cert
+CAPK=$(CERTDIR)/ca-key.pem
+PK=$(CERTDIR)/key.pem
+REQ=$(CERTDIR)/request.pem
+CA=$(CERTDIR)/ca.pem
+CERT=$(CERTDIR)/cert.pem
 
 # cert template
-CERTCFG=cert.cfg
-CERTCFGTMPL=$(CERTCFG).tmpl
+CERTCFG=$(CERTDIR)/cert.cfg
+CERTCFGTMPL=$(CERTDIR)/$(CERTCFG).tmpl
 
 # find/replace key in ca config
 HOSTNAMEKEY=HOSTNAME
 
 # ca template
-CACFG=ca.cfg
-CACFGTMPL=$(CACFG).tmpl
+CACFG=$(CERTDIR)/ca.cfg
+CACFGTMPL=$(CERTDIR)/$(CACFG).tmpl
 
 # find/replace key in cert config
 COMMONNAMEKEY=COMMON_NAME
