@@ -33,15 +33,27 @@ RSYSLOG_TLS_CONF=rsyslog/tlsserver.conf
 # certificate. If this is running on something else, it might not work. 
 URL=$(shell host $(shell dig @resolver1.opendns.com ANY myip.opendns.com +short) | sed 's/.*\(ec2.*\.com\).*/\1/')
 
-all: init ca pk req cert
+auth: init ca pk req cert
 
 #install:
+
+rsyslog: rsyslog_cert_path rsyslog_conf rsyslog_start
 
 # insert keyfile paths into rsyslog tls config file
 rsyslog_cert_path:
 	sed -i 's/$(CA_KEY)/$(shell realpath $(CA) | sed 's/\//\\\//g')/g' $(RSYSLOG_TLS_CONF)
 	sed -i 's/$(CERT_KEY)/$(shell realpath $(CERT) | sed 's/\//\\\//g')/g' $(RSYSLOG_TLS_CONF)
 	sed -i 's/$(PK_KEY)/$(shell realpath $(PK) | sed 's/\//\\\//g')/g' $(RSYSLOG_TLS_CONF)
+
+# append the config patch to the rsyslog conf file, and add our config file
+rsyslog_conf:
+	cat rsyslog/rsyslog.conf.patch >> /etc/rsyslog.conf
+	cp $(RSYSLOG_TLS_CONF) /etc/rsyslog.d/
+
+rsyslog_start:
+	systemctl restart rsyslog
+
+
 
 
 # insert hostname and server url into CA and cert config templates.
