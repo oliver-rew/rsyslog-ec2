@@ -19,7 +19,15 @@ CACFGTMPL=$(CACFG).tmpl
 # find/replace key in cert config
 COMMONNAMEKEY=COMMON_NAME
 
+# keys used in rsyslog config file to insert key paths
+CA_KEY=CA_PATH
+CERT_KEY=CERT_PATH
+PK_KEY=KEY_PATH
+
+RSYSLOG_TLS_CONF=rsyslog/tlsserver.conf
+
 # TODO PERMISSIONs?
+# TODO gate sudo
 
 # HACK! this gets the public url of an EC2 instance for use in the request
 # certificate. If this is running on something else, it might not work. 
@@ -28,6 +36,14 @@ URL=$(shell host $(shell dig @resolver1.opendns.com ANY myip.opendns.com +short)
 all: init ca pk req cert
 
 #install:
+
+rsyslog_cert_path:
+	#cat rsyslog/tlsserver.conf | sed 's/$(CA_KEY)/$(shell realpath $(CA) | sed 's/\//\\\//g')/g'
+	#cat rsyslog/tlsserver.conf | sed 's/$(CERT_KEY)/$(shell realpath $(CERT) | sed 's/\//\\\//g')/g'
+	#cat rsyslog/tlsserver.conf | sed 's/$(PK_KEY)/$(shell realpath $(PK) | sed 's/\//\\\//g')/g'
+	sed -i 's/$(CA_KEY)/$(shell realpath $(CA) | sed 's/\//\\\//g')/g' $(RSYSLOG_TLS_CONF)
+	sed -i 's/$(CERT_KEY)/$(shell realpath $(CERT) | sed 's/\//\\\//g')/g' $(RSYSLOG_TLS_CONF)
+	sed -i 's/$(PK_KEY)/$(shell realpath $(PK) | sed 's/\//\\\//g')/g' $(RSYSLOG_TLS_CONF)
 
 
 # insert hostname and server url into CA and cert config templates.
