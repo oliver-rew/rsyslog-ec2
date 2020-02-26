@@ -1,0 +1,46 @@
+/var/log/syslog
+/var/log/gw-*/*.log
+/var/log/kern.log
+{
+  su root syslog
+  extension .log
+	rotate 3
+  maxsize 100k
+	daily
+	missingok
+	notifempty
+	compress
+	postrotate
+		/usr/lib/rsyslog/rsyslog-rotate
+	endscript
+  dateext
+  dateformat _%Y-%m-%d-%s
+  lastaction
+    # sync all compressed logs in dirs matching "gw-*"
+    aws s3 sync --exclude "*" --include "gw-*" /var/log/ s3://cascade-rsyslog/
+  endscript
+}
+
+/var/log/mail.info
+/var/log/mail.warn
+/var/log/mail.err
+/var/log/mail.log
+/var/log/daemon.log
+/var/log/auth.log
+/var/log/user.log
+/var/log/lpr.log
+/var/log/cron.log
+/var/log/debug
+/var/log/messages
+{
+	rotate 4
+	weekly
+	missingok
+	notifempty
+	compress
+	delaycompress
+	sharedscripts
+	postrotate
+		/usr/lib/rsyslog/rsyslog-rotate
+	endscript
+}
