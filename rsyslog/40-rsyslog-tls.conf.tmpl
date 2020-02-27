@@ -9,9 +9,9 @@ module(load="imtcp" # TCP listener
 # make gtls driver the default and set certificate files
 global(
     DefaultNetstreamDriver="gtls"
-    DefaultNetstreamDriverCAFile="CA_PATH"
-    DefaultNetstreamDriverCertFile="CERT_PATH"
-    DefaultNetstreamDriverKeyFile="KEY_PATH"
+    DefaultNetstreamDriverCAFile="/home/ubuntu/rsyslog-ec2/cert/ca.pem"
+    DefaultNetstreamDriverCertFile="/home/ubuntu/rsyslog-ec2/cert/cert.pem"
+    DefaultNetstreamDriverKeyFile="/home/ubuntu/rsyslog-ec2/cert/key.pem"
     )
 
     # start up listener at port 6514
