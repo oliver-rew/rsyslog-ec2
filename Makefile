@@ -52,11 +52,6 @@ rsyslog_cert_path:
 	sed -i 's/$(CERT_KEY)/$(shell realpath $(CERT) | sed 's/\//\\\//g')/g' $(RSYSLOG_TLS_CONF)
 	sed -i 's/$(PK_KEY)/$(shell realpath $(PK) | sed 's/\//\\\//g')/g' $(RSYSLOG_TLS_CONF)
 
-# append the config patch to the rsyslog conf file, if not there already, and add our config file
-rsyslog_conf:
-	grep "$(shell cat rsyslog/rsyslog.conf.patch | head -1)" /etc/rsyslog.conf || (echo "" >> /etc/rsyslog.conf && cat rsyslog/rsyslog.conf.patch >> /etc/rsyslog.conf)
-	cp $(RSYSLOG_TLS_CONF) /etc/rsyslog.d/
-
 # restart rsyslog with the new changes
 rsyslog_start:
 	systemctl restart rsyslog

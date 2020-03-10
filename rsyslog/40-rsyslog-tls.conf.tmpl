@@ -9,9 +9,9 @@ module(load="imtcp" # TCP listener
 # make gtls driver the default and set certificate files
 global(
     DefaultNetstreamDriver="gtls"
-    DefaultNetstreamDriverCAFile="/home/ubuntu/rsyslog-ec2/cert/ca.pem"
-    DefaultNetstreamDriverCertFile="/home/ubuntu/rsyslog-ec2/cert/cert.pem"
-    DefaultNetstreamDriverKeyFile="/home/ubuntu/rsyslog-ec2/cert/key.pem"
+    DefaultNetstreamDriverCAFile="CA_PATH"
+    DefaultNetstreamDriverCertFile="CERT_PATH"
+    DefaultNetstreamDriverKeyFile="KEY_PATH"
     )
 
     # start up listener at port 6514
@@ -22,3 +22,9 @@ global(
 
 
 module(load="omprog")
+
+# add rsyslog path for gw serial based on hostname
+$template DynaFile, "/var/log/gw-%HOSTNAME%/%HOSTNAME%.log"
+$CreateDirs on
+*.* ?DynaFile
+& stop
