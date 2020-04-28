@@ -33,7 +33,8 @@ RSYSLOG_TLS_CONF_TMPL=$(RSYSLOG_TLS_CONF).tmpl
 
 # HACK! this gets the public url of an EC2 instance for use in the request
 # certificate. If this is running on something else, it might not work. 
-URL=$(shell host $(shell dig @resolver1.opendns.com ANY myip.opendns.com +short) | sed 's/.*\(ec2.*\.com\).*/\1/')
+#URL=$(shell host $(shell dig @resolver1.opendns.com ANY myip.opendns.com +short) | sed 's/.*\(ec2.*\.com\).*/\1/')
+URL=logs.rigado.io
 
 all:
 	@echo "Please install with 'sudo make install'"

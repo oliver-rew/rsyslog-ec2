@@ -4,6 +4,7 @@ module(load="imtcp" # TCP listener
     StreamDriver.Mode="1" # run driver in TLS-only mode
     StreamDriver.Authmode="anon"
     #PermittedPeer["*"]
+    MaxSessions="3000" # max number of TCP connections
     )
 
 # make gtls driver the default and set certificate files
