@@ -1,5 +1,5 @@
 # rigado gw s3 log rotation
-/var/log/gw-C*/*.log
+/var/log/gw-*/*.log
 {
   su root syslog
   extension .log
@@ -15,7 +15,7 @@
   dateext
   dateformat _%Y-%m-%d-%s
   lastaction
-    # sync all compressed logs in dirs matching "gw-*"
-    aws s3 sync --exclude "*" --include "gw-C*.gz" /var/log/ s3://cascade-rsyslog/
+    # sync all compressed logs in dirs matching "gw-C*", "gw-E*", or "gw-all*"
+    aws s3 sync --exclude "*" --include "gw-E*.gz" --include "gw-all*.gz" /var/log/ s3://cascade-rsyslog/
   endscript
 }
